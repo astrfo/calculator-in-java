@@ -5,6 +5,10 @@ import java.awt.event.*;
 /**
  * CalculatorApp
  */
+//public classなので他クラスからアクセス可能
+//extends JFrameでJFrameクラスを継承
+//implements ActionListenerでActionListenerインターフェースを実装
+//CalculatorAppがActionListenerを実装することでアクションイベントを処理できる
 public class CalculatorApp extends JFrame implements ActionListener {
     //JTextFieldはSwingコンポーネントの一つ
     //JTextFieldのインスタンスを参照するためのプライベートインスタンス変数textFieldを宣言
@@ -74,8 +78,32 @@ public class CalculatorApp extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    //オーバーライド：スーパークラスのメソッドをサブクラスで書き直すこと
+    //@Overrideが付与されているメソッドはオーバーライドされていなかったらエラーを出力するようになってる
+    //クラスはactionPerformedメソッドをオーバーライドしてイベントを処理
+    //ActionListenerインターフェースにactionPerformedメソッドが定義されているが，CalculatorAppクラスで再定義している
+    @Override
     public void actionPerformed(ActionEvent e) {
-        ;
+        //ActionEvent eはボタンがクリックされたとき
+        for(int i = 0; i < 10; i++) {
+            if(e.getSource() == numberButtons[i]) { //アクションイベントのソースが数字ボタンと等しいか
+                textField.setText(textField.getText() + i); //現在のテキストフィールドの値を取得し，クリックされたボタンと連結する
+                // "12"という数字を打つ際に"1"と"2"を順番に押すので，入力されている"1"と取得してから入力した"2"を連結して"12"を作成する
+            }
+        }
+
+        //"C"が押されたら空にする
+        if(e.getSource() == clearButton) {
+            textField.setText("");
+        }
+
+        for(int i = 0; i < 4; i++) {
+            if(e.getSource() == operatorButtons[i]) {
+                num1 = Double.parseDouble(textField.getText()); //getText()で取得したString型の文字列をDouble型に変換"12"→12
+                operator = operatorButtons[i].getText().charAt(0); //取得した文字列の最初の文字index:0が演算子になる
+                textField.setText(""); //取得後のテキストフィールドは空にする
+            }
+        }
     }
 
     public static void main(String[] args) {
