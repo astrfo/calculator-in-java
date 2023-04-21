@@ -104,6 +104,29 @@ public class CalculatorApp extends JFrame implements ActionListener {
                 textField.setText(""); //取得後のテキストフィールドは空にする
             }
         }
+
+        //電卓計算処理
+        if(e.getSource() == equalButton) {
+            num2 = Double.parseDouble(textField.getText());
+
+            //char型比較なのでString.equals()ではなく==で良いがシングルコーテーションで囲む
+            switch(operator) {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    result = num1 / num2;
+                    break;
+            }
+
+            textField.setText(String.valueOf(result));
+        }
     }
 
     public static void main(String[] args) {
